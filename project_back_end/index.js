@@ -16,12 +16,17 @@ app.post("/", (req, res) => {
     console.log("Pipe data from python script ...");
     largeDataSet.push(data);
   });
+  
+  python.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+  
   python.on("close", (code) => {
     console.log(`child process close all stdio with code ${code}`);
     //  res.send(largeDataSet.join(""))
-    res.send("hey");
+    res.send(largeDataSet.join(""));
   });}
-  catch(err){
+  catch(err){ 
     res.send(err)
   }
 });

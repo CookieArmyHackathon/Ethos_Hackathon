@@ -11,5 +11,6 @@ class ScrapenewssitesItem(scrapy.Item):
     a_news_title = scrapy.Field()
     b_news_url = scrapy.Field()
     c_news_imageLink = scrapy.Field()
+    count = scrapy.Field()
     # name = scrapy.Field()
     pass
