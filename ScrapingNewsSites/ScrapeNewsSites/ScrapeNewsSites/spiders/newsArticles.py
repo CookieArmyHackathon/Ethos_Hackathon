@@ -11,7 +11,7 @@ def joinSearchParameter(text):
 
 
 class NewsarticlesSpider(scrapy.Spider):
-    searchParameter = joinSearchParameter("xyz")
+    searchParameter = joinSearchParameter("christiano ronaldo")
     name = 'newsArticles'
     allowed_domains = ['news.google.com']
     start_urls = [
