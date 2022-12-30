@@ -8,8 +8,8 @@ import scrapy
 
 class ScrapenewssitesItem(scrapy.Item):
     # define the fields for your item here like:
-    news_title = scrapy.Field()
-    news_url = scrapy.Field()
-    news_imageLink = scrapy.Field()
+    a_news_title = scrapy.Field()
+    b_news_url = scrapy.Field()
+    c_news_imageLink = scrapy.Field()
     # name = scrapy.Field()
     pass
