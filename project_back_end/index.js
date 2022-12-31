@@ -2,7 +2,12 @@ const express = require("express");
 const { spawn } = require("child_process");
 const scrapy = require("node-scrapy");
 const fetch = require("node-fetch");
+const mysql = require("./connection").con;
+const cors = require('cors');
 const app = express();
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
 const port = 3300;
 const modifySearchParamter = (searchParameter) => {
