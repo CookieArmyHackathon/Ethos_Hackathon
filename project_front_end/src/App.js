@@ -1,9 +1,11 @@
-import './App.css';
+import Analysispage from "./Components/Analysispage/Analysispage";
+import Articlespage from "./Components/Articlespage/Articlespage";
 
 function App() {
   return (
     <div className="App">
-      OUR PROJECT FRONTEND
+      {/* <Analysispage/> */}
+      <Articlespage/>
     </div>
   );
 }

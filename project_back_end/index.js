@@ -86,7 +86,7 @@ app.post("/", (req, res) => {
     res.send(a)
   }
   let b=""
-  for (let page_number_bbc = 1; page_number_bbc < 21; page_number_bbc++) {
+  for (let page_number_bbc = 1; page_number_bbc < 21; page_number_bc++) {
     b=scrapeData(searchParameter, url_bbc_news.concat(page_number_bbc), model_bbc,page_number_bbc);
     if(b!=="success"){
       res.send(b)
