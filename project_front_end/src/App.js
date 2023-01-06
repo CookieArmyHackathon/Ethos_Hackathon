@@ -4,8 +4,8 @@ import Articlespage from "./Components/Articlespage/Articlespage";
 function App() {
   return (
     <div className="App">
-      {/* <Analysispage/> */}
-      <Articlespage/>
+      <Analysispage/>
+      {/* <Articlespage/> */}
     </div>
   );
 }
