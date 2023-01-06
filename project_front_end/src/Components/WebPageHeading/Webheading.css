@@ -1,0 +1,80 @@
+:root {
+    --background: hsl(33, 30%, 80%);
+  }
+  
+  body {
+    margin: 0px;
+    background-color: rgba(9, 85, 46, 0.333);
+  }
+  
+  .page-header {
+    position: relative;
+    background-color: var(--background);
+    padding: 8vh 10vw;
+    /*  background-image: url("https://images.unsplash.com/photo-1459213599465-03ab6a4d5931?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0ODYyMDc0Mg&ixlib=rb-1.2.1&q=85");
+    padding: 8vh 10vw;
+    background-size: cover;
+    background-position: center bottom; */
+  }
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .path {
+    fill: none;
+    stroke: #8c2016;
+    stroke-width: 5;
+    stroke-dasharray: 967;
+    stroke-dashoffset: 967;
+    animation: dash 5s ease-in-out forwards;
+  }
+  
+  @keyframes dash {
+    0% {
+      opacity: 0;
+      stroke-dashoffset: 967;
+    }
+    40% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.8;
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  h1 {
+    font-size: 8vw;
+    color: #112;
+    font-family: "Bebas Neue", sans-serif;
+    line-height: 0.9em;
+    margin: 0px;
+    max-width: 1000px;
+    text-transform: uppercase;
+  }
+  
+  h1 span {
+    color: #112;
+    white-space: nowrap;
+    animation: tagline 2s ease-in-out 2s forwards;
+  }
+  
+  @keyframes tagline {
+    from {
+      color: #112;
+    }
+    to {
+      color: #8c2016;
+    }
+  }
+  

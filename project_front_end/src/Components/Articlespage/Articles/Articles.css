@@ -36,12 +36,9 @@
 /* IMAGE HOVER EFFECT */
 .scroll-img {
     transition: all 0.3s ease;
-    filter: brightness(0.6);
+    /* filter: brightness(0.6); */
 }
 
-.scroll-img:hover {
-    filter: brightness(1);
-}
 
 /* SCROLL IMAGES CONTAINER */
 .scroll-imgs-container {
@@ -113,7 +110,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     position: relative;
-    background: rgba(255, 87, 87, 0.15);
+    background: rgba(255, 8, 8, 0.15);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(4.5px);
     -webkit-backdrop-filter: blur(4.5px);
