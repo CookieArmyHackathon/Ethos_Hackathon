@@ -10,7 +10,7 @@
   .page-header {
     position: relative;
     background-color: var(--background);
-    padding: 8vh 10vw;
+    padding: 4vh 10vw;
     /*  background-image: url("https://images.unsplash.com/photo-1459213599465-03ab6a4d5931?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0ODYyMDc0Mg&ixlib=rb-1.2.1&q=85");
     padding: 8vh 10vw;
     background-size: cover;
@@ -54,7 +54,8 @@
   }
   
   h1 {
-    font-size: 8vw;
+    font-size: 5vw;
+    text-align: center;
     color: #112;
     font-family: "Bebas Neue", sans-serif;
     line-height: 0.9em;

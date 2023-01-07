@@ -1,9 +1,13 @@
-import React from "react";
+import {React,useState} from "react";
 import "./Mainpage.css"
 import { useNavigate } from "react-router-dom";
 import Webheading from "../WebPageHeading/Webheading";
 const Mainpage = () => {
   const navigate = useNavigate();
+  const [searchParameter, setSearchParameter] = useState("")
+  const onSubmit=()=>{
+
+  }
   return (
     <div>
       <Webheading/>
@@ -19,7 +23,13 @@ const Mainpage = () => {
             type="text"
             name="searchQueryInput"
             placeholder="Search"
-            value=""
+            value={searchParameter}
+            onClick={()=>{
+              onSubmit()
+            }}
+            onChange={()=>{
+              setSearchParameter(searchParameter)
+            }}
           />
           <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit" onClick={()=>{
             navigate("/analysis")
