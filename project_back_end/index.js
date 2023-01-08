@@ -17,36 +17,31 @@ const modifySearchParamter = (searchParameter, delimeter) => {
   var separatedArray = searchParameter.split(" ");
   return separatedArray.join(delimeter);
 };
-const scrapeData = (searchParameter, url, model,page_number=1) => {
+const scrapeData = (searchParameter, url, model, page_number = 1) => {
   fetch(url)
-    .then((res) => res.text()) 
+    .then((res) => res.text())
     .then((body) => {
       const content = scrapy.extract(body, model);
       let qry1 = `delete from newsarticles where NewsSearchParameter!='${searchParameter}'`;
       mysql.query(qry1, (err, result) => {
         if (err) {
-          return err
+          return err;
         }
       });
       content.news_articles.map((article) => {
-        let new_article_news_title=null;
-        if(article.news_title!==null){
-            new_article_news_title=article.news_title.replaceAll(
-              `'`,
-              ``
-            );
+        let new_article_news_title = null;
+        if (article.news_title !== null) {
+          new_article_news_title = article.news_title.replaceAll(`'`, ``);
         }
-        let qry = `insert into newsarticles values (0,'${searchParameter}','${new_article_news_title}','${article.news_link}','${
-          article.news_imageLink
-        }')`;
+        let qry = `insert into newsarticles values (0,'${searchParameter}','${new_article_news_title}','${article.news_link}','${article.news_imageLink}')`;
         mysql.query(qry, (err, result) => {
           if (err) {
             return err;
-          } 
+          }
         });
       });
     });
-    return "success"
+  return "success";
 };
 app.post("/", (req, res) => {
   const { searchParameter } = req.body;
@@ -81,18 +76,53 @@ app.post("/", (req, res) => {
       },
     ],
   };
-  let a=scrapeData(searchParameter, url_google_news, model_google);
-  if(a!=="success"){
-    res.send(a)
+  let a = scrapeData(searchParameter, url_google_news, model_google);
+  if (a !== "success") {
+    res.send(a);
   }
-  let b=""
-  for (let page_number_bbc = 1; page_number_bbc < 21; page_number_bc++) {
-    b=scrapeData(searchParameter, url_bbc_news.concat(page_number_bbc), model_bbc,page_number_bbc);
-    if(b!=="success"){
-      res.send(b)
+  let b = "";
+  for (let page_number_bbc = 1; page_number_bbc < 21; page_number_bbc++) {
+    b = scrapeData(
+      searchParameter,
+      url_bbc_news.concat(page_number_bbc),
+      model_bbc,
+      page_number_bbc
+    );
+    if (b !== "success") {
+      res.send(b);
     }
   }
-  res.send("complete")
+  if (a == "success" && b == "success") {
+    let qry=`select * from newsarticles`
+    mysql.query(qry,(err,result)=>{
+      if(err){
+        res.send(err)
+      }
+      else{
+        var final_output=[];
+        result.map((article)=>{
+          let title = { inputs: `${article.NewsHeading}`};
+
+          fetch(
+            "https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment",
+            {
+              method: "POST",
+              body: JSON.stringify(title),
+              headers: {
+                Authorization: `Bearer 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`,
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((json) => {
+              console.log(json);
+            });
+        })
+
+      }
+    })
+    res.send("complete");
+  }
 });
 app.post("/getArticles", (req, res) => {
   let qry = `select * from newsarticles where NewsSearchParameter='${req.body.searchParameter}'`;
