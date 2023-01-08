@@ -100,29 +100,28 @@ app.post("/", (req, res) => {
       }
       else{
         var final_output=[];
-        result.map((article)=>{
-          let title = { inputs: `${article.NewsHeading}`};
-
+        // result.map((article)=>{
+          let title = result[0].NewsHeading;
+    const a="bad"
           fetch(
-            "https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment",
+            "http://127.0.0.1:8000/predict/",
             {
               method: "POST",
-              body: JSON.stringify(title),
-              headers: {
-                Authorization: `Bearer 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`,
-              },
+              body:JSON.stringify(a),
+              headers: { 'Content-Type': 'application/json' },
             }
           )
-            .then((res) => res.json())
-            .then((json) => {
-              console.log(json);
+            .then((res) => res.text())
+            .then((body) => {
+              console.log(body);
             });
-        })
+        }
+        )
 
-      }
+      } 
     })
-    res.send("complete");
   }
+  res.send("complete");
 });
 app.post("/getArticles", (req, res) => {
   let qry = `select * from newsarticles where NewsSearchParameter='${req.body.searchParameter}'`;
