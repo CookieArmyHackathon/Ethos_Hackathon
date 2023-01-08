@@ -100,7 +100,7 @@ app.post("/", (req, res) => {
       }
       else{
         var final_output=[];
-        // result.map((article)=>{
+        result.map((article)=>{
           let title = result[0].NewsHeading;
     const a="bad"
           fetch(
