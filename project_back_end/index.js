@@ -4,7 +4,7 @@ const scrapy = require("node-scrapy");
 const fetch = require("node-fetch");
 const mysql = require("./connection").con;
 const cors = require("cors");
-const axios=require("axios")
+const axios = require("axios");
 const { resolveSoa } = require("dns/promises");
 const app = express();
 app.use(
@@ -18,6 +18,7 @@ const modifySearchParamter = (searchParameter, delimeter) => {
   var separatedArray = searchParameter.split(" ");
   return separatedArray.join(delimeter);
 };
+var data;
 const scrapeData = (searchParameter, url, model, page_number = 1) => {
   fetch(url)
     .then((res) => res.text())
@@ -42,7 +43,7 @@ const scrapeData = (searchParameter, url, model, page_number = 1) => {
         });
       });
     });
-  return "success";
+  return data;
 };
 app.post("/", (req, res) => {
   const { searchParameter } = req.body;
@@ -75,59 +76,21 @@ app.post("/", (req, res) => {
         news_imageLink:
           ".e3z3r3u0 .ehnfhlg4 .ehnfhlg2 .ehnfhlg3 .e16icw910  img (src)",
       },
-    ],
+    ], 
   };
   let a = scrapeData(searchParameter, url_google_news, model_google);
-  if (a !== "success") {
-    res.send(a);
-  }
-  let b = "";
   for (let page_number_bbc = 1; page_number_bbc < 21; page_number_bbc++) {
-    b = scrapeData(
+    scrapeData(
       searchParameter,
       url_bbc_news.concat(page_number_bbc),
       model_bbc,
       page_number_bbc
     );
-    if (b !== "success") {
-      res.send(b);
-    }
   }
-  if (a == "success" && b == "success") {
-    let qry=`select * from newsarticles`
-    mysql.query(qry,(err,result)=>{
-      if(err){
-        res.send(err)
-      }
-      else{ 
-        var final_output=[];
-        // result.map((article)=>{
-          // let title = result[1].NewsHeading;
-          let orderFormData = new FormData();
-          orderFormData.append('result', JSON.stringify(result));
-          const headers = {
-            'Content-Type' : 'application/json',
-            'Accept' : 'application/json',
-          };
-          axios.post('http://127.0.0.1:8000/predict/',orderFormData,{headers:headers})
-          .then(res=>{
-            console.log('res', res)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-        
-          
-        // }
-        // )
-
-      }
-    })
-  }
-  res.send("complete");
+  res.send("complete")
 });
-app.post("/getArticles", (req, res) => {
-  let qry = `select * from newsarticles where NewsSearchParameter='${req.body.searchParameter}'`;
+app.get("/getArticles", (req, res) => {
+  let qry = `select * from newsarticles`;
   mysql.query(qry, (err, result) => {
     if (err) {
       res.send(err);

@@ -1,9 +1,19 @@
-import React from "react";
+import {React,useEffect} from "react";
 import Graph from "./Graphs/Graph";
 import "./Analysispage.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Webheading from "../WebPageHeading/Webheading";
+import axios from "axios"
+
 const Analysispage = () => {
+  const handleClick=()=>{
+    axios.get("http://127.0.0.1:3300/getArticles",
+    ).then(res=>{
+      navigate("/articles",{state:res.data})
+    })
+  }
+  const navigate = useNavigate();
   return (
     <div className="analysis-page">
       <div class="webheading">
@@ -22,9 +32,10 @@ const Analysispage = () => {
           </p>
         </div>
         <div className="fetched-articles-button">
-          <Link to="/articles">
-            <button>View Articles</button>
-          </Link>
+          
+            <button onClick={()=>{
+              handleClick()
+            }}>View Articles</button>
         </div>
       </div>
     </div>
