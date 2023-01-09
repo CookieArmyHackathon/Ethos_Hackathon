@@ -4,6 +4,7 @@ const scrapy = require("node-scrapy");
 const fetch = require("node-fetch");
 const mysql = require("./connection").con;
 const cors = require("cors");
+const axios=require("axios")
 const { resolveSoa } = require("dns/promises");
 const app = express();
 app.use(
@@ -98,27 +99,29 @@ app.post("/", (req, res) => {
       if(err){
         res.send(err)
       }
-      else{
+      else{ 
         var final_output=[];
-        result.map((article)=>{
-          let title = result[0].NewsHeading;
-    const a="bad"
-          fetch(
-            "http://127.0.0.1:8000/predict/",
-            {
-              method: "POST",
-              body:JSON.stringify(a),
-              headers: { 'Content-Type': 'application/json' },
-            }
-          )
-            .then((res) => res.text())
-            .then((body) => {
-              console.log(body);
-            });
-        }
-        )
+        // result.map((article)=>{
+          // let title = result[1].NewsHeading;
+          let orderFormData = new FormData();
+          orderFormData.append('result', JSON.stringify(result));
+          const headers = {
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json',
+          };
+          axios.post('http://127.0.0.1:8000/predict/',orderFormData,{headers:headers})
+          .then(res=>{
+            console.log('res', res)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+        
+          
+        // }
+        // )
 
-      } 
+      }
     })
   }
   res.send("complete");
